@@ -42,16 +42,16 @@ function pageBuilder(root) {
 		return code;
 	};
 		
-	pb.getSnippetCode = function(file, prm_str) {
+	pb.getSnippetCode = function(file) {
 		var code = {
 			html : '',
 			less : [],
 			js : [],
 		};
-		prm_str = prm_str || '';
+
 		if(fs.existsSync(pb.getFileName(file))) {
-			var file_handle = fs.openSync(pb.getFileName(file), 'r', 0644);
-			code.html = fs.readSync(file_handle, 10485760, null, 'utf8')[0];
+			var file_handle = fs.openSync(pb.getFileName(file));
+			code.html = fs.readFileSync(file_handle, "utf8");
 			fs.close(file_handle);
 			code.html = code.html.replace(pb.regexp.base, pb.basereplacer);
 		}
